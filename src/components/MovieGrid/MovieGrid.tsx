@@ -1,4 +1,3 @@
-// src/components/MovieGrid/MovieGrid.tsx
 import type { Movie } from '../../types/movie';
 import css from './MovieGrid.module.css';
 
@@ -11,20 +10,17 @@ export default function MovieGrid({ movies, onSelect }: MovieGridProps) {
   return (
     <ul className={css.grid}>
       {movies.map(movie => (
-        <li key={movie.id}>
-          <button
-            type="button"
-            className={css.card}
-            onClick={() => onSelect(movie)}
-          >
-            <img
-              className={css.image}
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.title}
-              loading="lazy"
-            />
-            <h2 className={css.title}>{movie.title}</h2>
-          </button>
+        <li key={movie.id} className={css.card} onClick={() => onSelect(movie)}>
+          <img
+            className={css.image}
+            src={
+              movie.poster_path
+                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                : 'https://via.placeholder.com/500x750?text=No+Image'
+            }
+            alt={movie.title}
+          />
+          <p className={css.title}>{movie.title}</p>
         </li>
       ))}
     </ul>
