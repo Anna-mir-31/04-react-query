@@ -1,3 +1,5 @@
+// src/components/App/App.tsx
+
 import { useState } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import SearchBar from '../SearchBar/SearchBar';
@@ -36,7 +38,19 @@ export default function App() {
 
   return (
     <div className={css.app}>
-      <SearchBar onSubmit={handleSearch} />
+      <header className={css.header}>
+        <div className={css.container}>
+          <a
+            href="https://www.themoviedb.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={css.link}
+          >
+            Powered by TMDB
+          </a>
+          <SearchBar onSubmit={handleSearch} />
+        </div>
+      </header>
 
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}

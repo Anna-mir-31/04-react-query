@@ -1,14 +1,47 @@
 .app {
-    padding: 0 16px;
+    font-family: sans-serif;
+    padding: 20px;
 }
-.searchWrapper {
-    display: flex;
-    justify-content: flex-end;
+
+.header {
+    padding: 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
     margin-bottom: 20px;
 }
 
-.searchWrapper form {
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
     display: flex;
-    max-width: 400px;
-    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.link {
+    font-size: 16px;
+    font-weight: 500;
+    color: #0a66c2;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.link:hover {
+    color: #004182;
+    text-decoration: underline;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    list-style: none;
+    padding: 20px;
+}
+
+.active {
+    font-weight: bold;
+    color: red;
 }

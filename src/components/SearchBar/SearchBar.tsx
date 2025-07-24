@@ -9,8 +9,8 @@ export default function SearchBar({ onSubmit }: SearchBarProps) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
-    const query = form.elements.namedItem('query') as HTMLInputElement;
-    const search = query.value.trim();
+    const input = form.elements.namedItem('query') as HTMLInputElement;
+    const search = input.value.trim();
 
     if (!search) {
       toast.error('Please enter a search query.');
@@ -23,8 +23,16 @@ export default function SearchBar({ onSubmit }: SearchBarProps) {
 
   return (
     <form className={css.form} onSubmit={handleSubmit}>
-      <input className={css.input} type="text" name="query" placeholder="Search movies..." />
-      <button className={css.button} type="submit">Search</button>
+      <input
+        className={css.input}
+        type="text"
+        name="query"
+        placeholder="Search movies..."
+        autoComplete="off"
+      />
+      <button className={css.button} type="submit">
+        Search
+      </button>
     </form>
   );
 }
