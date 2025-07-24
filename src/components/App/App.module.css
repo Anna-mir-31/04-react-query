@@ -1,3 +1,14 @@
 .app {
     padding: 0 16px;
 }
+.searchWrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.searchWrapper form {
+    display: flex;
+    max-width: 400px;
+    width: 100%;
+}
