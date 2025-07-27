@@ -1,6 +1,8 @@
-import { useState } from 'react';
+// src/components/App/App.tsx
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import ReactPaginate from 'react-paginate';
+import toast from 'react-hot-toast';
 
 import SearchBar from '../SearchBar/SearchBar';
 import MovieGrid from '../MovieGrid/MovieGrid';
@@ -22,9 +24,16 @@ export default function App() {
     queryKey: ['movies', query, page],
     queryFn: () => fetchMoviesByQuery(query, page),
     enabled: query.trim() !== '',
-    placeholderData: (prev) => prev, 
+    placeholderData: (prev) => prev,
     retry: false,
   });
+
+  // ✅ показати toast якщо нічого не знайдено
+  useEffect(() => {
+    if (isSuccess && data && data.results.length === 0) {
+      toast.error('No movies found');
+    }
+  }, [isSuccess, data]);
 
   const handleSearch = (newQuery: string) => {
     if (newQuery !== query) {
@@ -50,17 +59,13 @@ export default function App() {
             Powered by TMDB
           </a>
 
-          <SearchBar action={(formData) => handleSearch(formData.get('search') as string)} />
+          {/* ✅ важливо: тут саме `onSubmit`, а не `action` */}
+          <SearchBar onSubmit={handleSearch} />
         </div>
       </header>
 
-      {isLoading && <Loader />} 
-      {isError && <ErrorMessage />} 
-
-      {isSuccess && data && data.results.length === 0 && (
-        <ErrorMessage message="No movies found" />
-      )}
-
+      {isLoading && <Loader />}
+      {isError && <ErrorMessage />}
       {isSuccess && data && data.results.length > 0 && (
         <section className={css.resultsWrapper}>
           <div className={css.paginationTop}>
