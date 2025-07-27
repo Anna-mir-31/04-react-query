@@ -1,5 +1,4 @@
-// ✅ SearchBar.tsx
-import { useState, type FormEvent } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import css from './SearchBar.module.css';
 
@@ -10,18 +9,20 @@ interface SearchBarProps {
 export default function SearchBar({ onSubmit }: SearchBarProps) {
   const [value, setValue] = useState('');
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const trimmed = value.trim();
-    if (!trimmed) {
-      toast.error('Please enter a search query');
-      return;
-    }
-    onSubmit(trimmed); // 🔥 ВИКЛИК функції
-  };
-
   return (
-    <form onSubmit={handleSubmit} className={css.form}>
+    <form
+      className={css.form}
+      action={async (formData: FormData) => {
+        const query = (formData.get('query') as string)?.trim();
+
+        if (!query) {
+          toast.error('Please enter a search query');
+          return;
+        }
+
+        onSubmit(query);
+      }}
+    >
       <input
         className={css.input}
         type="text"
@@ -30,7 +31,7 @@ export default function SearchBar({ onSubmit }: SearchBarProps) {
         autoFocus
         placeholder="Search movies"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={e => setValue(e.target.value)}
       />
       <button type="submit" className={css.button}>Search</button>
     </form>
